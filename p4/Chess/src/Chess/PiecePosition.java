@@ -3,15 +3,22 @@ package Chess;
 public class PiecePosition {
 
 	/**
-	 * 
-	 */
+         * Esta función 
+         * @param column Columna a comprobar.
+         * @param row Fila a comprobar
+         * @return Devuelve si 
+         */
 	public static boolean isAvailable(int column, int row) {
 		return column >= 0 && column < 8 && row >= 0 && row < 8;
 	}
 
 	/**
-	 * 
-	 */
+         * 
+         * @param position
+         * @param columnIncrement
+         * @param rowIncrement
+         * @return 
+         */
 	static boolean isAvailable(PiecePosition position, int columnIncrement, int rowIncrement) {
 		if (position == null)
 			return false;
@@ -22,8 +29,10 @@ public class PiecePosition {
 	}
 
 	/**
-	 * 
-	 */
+         * 
+         * @param position
+         * @return 
+         */
 	static boolean isAvailable(PiecePosition position) {
 		if (position == null)
 			return false;
@@ -33,27 +42,37 @@ public class PiecePosition {
 	private int column, row;
 
 	/**
-	 * 
-	 */
+         * 
+         * @param column
+         * @param row 
+         */
 	public PiecePosition(int column, int row) {
 		this.column = column;
 		this.row = row;
 	}
 	
 	/**
-	 * 
-	 */
+         * 
+         * @return 
+         */
 	public int getColumn() {
 		return column;
 	}
 
 	/**
-	 * 
-	 */
+         * 
+         * @return 
+         */
 	public int getRow() {
 		return row;
 	}
 	
+        /**
+         * 
+         * @param column
+         * @param row
+         * @return 
+         */
 	public boolean setValues(int column, int row) {
 		if (isAvailable(column, row)) {
 			this.column = column;
@@ -64,8 +83,11 @@ public class PiecePosition {
 	}
 	
 	/**
-	 * 
-	 */
+         * 
+         * @param columnCount
+         * @param rowCount
+         * @return 
+         */
 	public PiecePosition getDisplacedPiece(int columnCount, int rowCount) {		
 		if (!isAvailable(this, columnCount, rowCount))
 			return null;
@@ -75,15 +97,18 @@ public class PiecePosition {
 	}
 	
 	/**
-	 * 
-	 */
+         * 
+         * @return 
+         */
 	public PiecePosition clone() {
 		return new PiecePosition(column, row);
 	}
 	
 	/**
-	 * 
-	 */
+         * 
+         * @param aPosition
+         * @return 
+         */
 	public boolean equals(PiecePosition aPosition) {
 		return aPosition.getColumn() == getColumn() && aPosition.getRow() == getRow();
 	}

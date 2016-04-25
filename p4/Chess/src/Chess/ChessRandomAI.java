@@ -3,6 +3,7 @@ package Chess;
 import java.util.Random;
 
 public class ChessRandomAI implements ChessAI {
+    
 	private final Random random = new Random();
 	
 	@Override

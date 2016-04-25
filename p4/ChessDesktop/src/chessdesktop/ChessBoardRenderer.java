@@ -13,7 +13,7 @@ public class ChessBoardRenderer {
 	final double TOP_MARGIN = 50;
 	final double PIECE_OFFSET = 5;
 	
-	private final Chess.ChessBoard board = new Chess.ChessBoardImplementation();
+	protected final Chess.ChessBoard board = new Chess.ChessBoardImplementation();
 	private Chess.ChessPiece movingPiece;
 	
 	static private void drawCrown(GraphicsContext aContext, double minX, double minY, double width, double height) {
@@ -24,6 +24,25 @@ public class ChessBoardRenderer {
 		aContext.fillPolygon(x, y, 7);
 	}
 	
+        void ChangeColorAvailablePositions (Canvas canvas, PiecePosition[] piece) {
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            
+            Bounds boardBounds = getBoardBounds(canvas);
+            double width = boardBounds.getWidth() / 8;
+            double height = boardBounds.getHeight() / 8;
+                
+            for (int i = 0; i < piece.length; i++) {
+                int c = piece[i].getColumn();
+                int r = piece[i].getRow();
+                
+                double minx = boardBounds.getMinX() + (c + 0.0) * width;
+                double miny = boardBounds.getMinY() + (r + 0.0) * height;
+                
+                gc.setFill(Color.BLUE);
+                gc.fillRect(minx, miny, width, height);   
+            }                                    
+        }
+        
 	static private void drawTriangle(GraphicsContext aContext, double minX, double minY, double width, double height) {
 		double maxX = minX + width;
 		double maxY = minY + height;
@@ -80,7 +99,9 @@ public class ChessBoardRenderer {
 				drawTriangle(gc, minX + width * 0.3, minY + height * 0.2, width * 0.4, height * 0.8);
 				break;
 			case KNIGHT:
-				gc.fillOval(minX, minY, width, height);
+                            
+                              drawTriangle(gc, minX + width * 0.25, minY -10 + height  * 0.2, width * 0.5, height * 0.8);
+                                gc.fillRect(minX +10, minY +9, width*0.6, height*0.7);
 				break;
 			case PAWN: 
 				drawTriangle(gc, minX, minY + height * 0.3, width, height * 0.7);
@@ -169,22 +190,31 @@ public class ChessBoardRenderer {
 	}
 	
 	boolean movePieceTo(Canvas canvas, double x, double y) {
+            
 		if (movingPiece == null)
 			return false;
 		Bounds boardBounds = getBoardBounds(canvas);
-		if (boardBounds.contains(x, y)) {
+		
+                if (boardBounds.contains(x, y)) {
 			double width = boardBounds.getWidth() / 8;
 			double height = boardBounds.getHeight() / 8;
 			int column = (int)((x - boardBounds.getMinX()) / width);
 			int row = (int)((y - boardBounds.getMinY()) / height);
 			PiecePosition position = new PiecePosition(column, row);
-			if (movingPiece.canMoveToPosition(position, board))
+                        
+			if (movingPiece.canMoveToPosition(position, board)){
 				return board.movePieceTo(movingPiece, position);
+                                
+                        }
 		}
 		return false;
 	}
 
 	boolean containsKing(ChessPiece.Color aColor) {
-		return board.containsKing(aColor);
+            return board.containsKing(aColor);
 	}
+        
+        Chess.ChessBoard getBoard() {
+            return board;
+        }
 }

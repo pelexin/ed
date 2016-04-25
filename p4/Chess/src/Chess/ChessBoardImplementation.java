@@ -1,6 +1,8 @@
 package Chess;
 
+import Chess.ChessPiece.Color;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.*;
 
 public class ChessBoardImplementation implements ChessBoard {
@@ -110,12 +112,65 @@ public class ChessBoardImplementation implements ChessBoard {
 
 	@Override
 	public boolean saveToFile(File location) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+            String data;
+            FileWriter fichero;
+            try{
+                fichero = new FileWriter(location);
+                for (int x = 0; x < 8; x++){
+                    for (int y = 0; y < 8; y++){
+                        if(getPiece(x,y) != null){
+                            data = pieces[getPieceIndex(x,y)].getType()+","
+                                    +pieces[getPieceIndex(x,y)].getColor()+","
+                                    +x+","+y+","
+                                    +pieces[getPieceIndex(x,y)].wasMoved()+" ";
+                            fichero.write(data);
+                        }
+                    }
+                }
+                fichero.close();
+                return true;
+            } 
+            catch (Exception ex){
+                return false;
+            }
+        }
 
 	@Override
 	public boolean loadFromFile(File location) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+		String line;
+                String[] data;
+                Scanner reader;
+                ChessPiece.Color color;
+                ChessPiece.Type type;
+                int x, y;
+                boolean moved;
+                
+                try{                
+                    for (int i = 0; i < 8; i++) {
+                        for (int j = 0; j < 8; j++) {
+                            pieces[getPieceIndex(i, j)] = 
+                                    new ChessPieceImplementation(Color.VOID, null, false);
+                        }
+                    }
+                    
+                    reader = new Scanner(location);
+                    
+                    for(int i = 0; i < location.length();i++)
+                    {
+                        line = reader.next();
+                        data = line.split(",");                     
+                        type = ChessPiece.Type.valueOf(data[0]);
+                        color = ChessPiece.Color.valueOf(data[1]);
+                        x = Integer.parseInt(data[2]);
+                        y = Integer.parseInt(data[3]);
+                        moved = Boolean.valueOf(data[4]);
+                        pieces[getPieceIndex(x, y)] = new ChessPieceImplementation(color, type, moved);
+                    }
+                    return true;
+                }
+                catch(Exception ex){
+                    return false;
+                }
+        }
 	
 }

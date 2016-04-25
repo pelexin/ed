@@ -9,8 +9,8 @@ public interface ChessBoard {
 	 * No contiene nulls.
 	 * @return The pieces contained in the board.
 	 */
-	default ChessPiece[] getPieces() {
-		return ChessUtils.cat(getPieces(ChessPiece.Color.BLACK), getPieces(ChessPiece.Color.WHITE));
+    default ChessPiece[] getPieces() {
+	return ChessUtils.cat(getPieces(ChessPiece.Color.BLACK), getPieces(ChessPiece.Color.WHITE));
 	}
 
 	/**
@@ -34,7 +34,7 @@ public interface ChessBoard {
 	 * @param aPiece The piece want to ask for.
 	 * @return The position of the piece.
 	 */
-	PiecePosition getPiecePosition(ChessPiece aPiece);
+    PiecePosition getPiecePosition(ChessPiece aPiece);
 	
 	/**
 	 * Esta función borra la pieza que hay en una determinada posición.
@@ -62,12 +62,12 @@ public interface ChessBoard {
 	 * @param location Path of the file to be saved.
 	 * @return true if successfull, false otherwise.
 	 */
-	boolean saveToFile(File location);
+    boolean saveToFile(File location);
 
 	/**
 	 * Esta función abre la partida que hay en un archivo
 	 * @param location Path of the file to be loaded.
 	 * @return true if successfull, false otherwise.
 	 */
-	boolean loadFromFile(File location);
+    boolean loadFromFile(File location);
 }

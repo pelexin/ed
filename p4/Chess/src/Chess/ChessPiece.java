@@ -3,12 +3,12 @@ package Chess;
 public interface ChessPiece {
     
     enum Color {
-        BLACK, WHITE
+        BLACK, WHITE, VOID
     }
-	
-	enum Type {
-		KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
-	}
+
+    enum Type {
+            KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
+    }
 
 	/**
 	 * Esta función devuelve el color de la pieza.
@@ -17,7 +17,7 @@ public interface ChessPiece {
     Color getColor();
 	
 	/**
-	 * Esta función devuelve el color de la pieza
+	 * Esta función devuelve el tipo de la pieza
 	 * @return 
 	 */
     Type getType();
@@ -26,14 +26,14 @@ public interface ChessPiece {
 	 * Cuando el tablero mueve una ficha, llama a esta función para notificarle
 	 * que la ha movido.
 	 */
-	void notifyMoved();
+    void notifyMoved();
 
 	/**
 	 * Esta función devuelve si la ficha se ha movido en algún momento de la partida 
 	 * o no.
 	 * @return true if notifyMoved was called once at least, false otherwise.
 	 */
-	boolean	wasMoved();
+    boolean wasMoved();
 	
 	/**
 	 * Esta función devuelve un array con todas las posibles posiciones a las que 
@@ -49,12 +49,12 @@ public interface ChessPiece {
 	 * @param aBoard Board containing the piece.
 	 * @return true if the piece can be moved, false otherwise.
 	 */
-	default boolean canMoveToPosition(PiecePosition aPosition, ChessBoard aBoard) {
-		PiecePosition[] positions = getAvailablePositions(aBoard);
-		if (positions != null)
-			for (PiecePosition position : positions)
-				if (position.equals(aPosition))
-					return true;
-		return false;
+    default boolean canMoveToPosition(PiecePosition aPosition, ChessBoard aBoard) {
+	PiecePosition[] positions = getAvailablePositions(aBoard);
+	if (positions != null)
+		for (PiecePosition position : positions)
+			if (position.equals(aPosition))
+				return true;
+	return false;
 	}
 }
