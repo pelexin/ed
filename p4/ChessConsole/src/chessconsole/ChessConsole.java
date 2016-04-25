@@ -55,7 +55,7 @@ public class ChessConsole {
 		for (int column = 0; column < 8; column++)
 			System.out.print(" " + (column + 1) + " ");
 		System.out.println();
-		System.out.print("-----------------------------------------------------");
+		System.out.println("-----------------------------------------------------");
     }
     
     public static void main(String[] args) {
